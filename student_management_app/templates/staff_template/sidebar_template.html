@@ -1,0 +1,165 @@
+{% load static %}
+
+<style>
+  /* Sidebar background & general look */
+  .main-sidebar {
+    /* Blue gradient background */
+    background: linear-gradient(180deg, #1A73E8 0%, #6699FF 100%);
+    color: #FFFFFF; /* White text for general sidebar content */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-right: 3px solid #145CBF; /* Darker blue border */
+  }
+
+  /* Brand logo */
+  .brand-link {
+    background-color: #115293; /* Darker blue for brand link background */
+    border-bottom: 1px solid #0D3E70; /* Even darker blue border */
+    color: #FFFFFF !important; /* White text for brand link */
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+  }
+
+  .brand-link:hover {
+    background-color: #0F4A82; /* Slightly lighter dark blue on hover */
+    color: #FFFFFF !important;
+    transform: scale(1.02); /* Slight zoom on hover */
+  }
+
+  .brand-image {
+    filter: brightness(1.1) saturate(1.2);
+  }
+
+  /* Sidebar user panel */
+  .user-panel {
+    border-bottom: 1px solid #4D80E4; /* Lighter blue border for user panel */
+  }
+  .user-panel .image img {
+    border: 2px solid #84A7F3; /* Light blue border for user image */
+    filter: drop-shadow(0 0 3px #84A7F3);
+  }
+  .user-panel .info a {
+    color: #FFFFFF; /* White text for user name */
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover (color and zoom) */
+  }
+  .user-panel .info a:hover {
+    color: #E0E0E0; /* Slightly off-white on hover */
+    transform: scale(1.05); /* Zoom effect on hover */
+  }
+
+  /* Sidebar links */
+  .nav-sidebar > .nav-item > .nav-link {
+    color: #FFFFFF; /* White text for navigation links */
+    font-weight: 500;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Smooth transitions for all effects */
+  }
+
+  .nav-sidebar > .nav-item > .nav-link:hover {
+    background-color: #4D80E4; /* Lighter blue on hover */
+    color: #FFFFFF; /* Keep text white on hover */
+    transform: scale(1.03); /* Zoom effect on hover */
+  }
+
+  /* Active link */
+  .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #87CEEB !important; /* Sky blue background for pressed/active button */
+    color: #FFFFFF !important; /* White text for pressed/active button */
+    box-shadow: 0 0 8px rgba(102, 153, 255, 0.7); /* Blue shadow for active state */
+    transform: scale(1.03); /* Maintain slight zoom for active state */
+  }
+
+  /* Icons */
+  .nav-icon {
+    color: #FFFFFF; /* White icon color */
+    font-size: 1.1rem;
+    margin-right: 12px;
+    transition: color 0.3s ease; /* Smooth transition for icon color */
+  }
+
+  .nav-link:hover .nav-icon,
+  .nav-link.active .nav-icon {
+    color: #FFFFFF; /* Keep icon white on hover and active */
+  }
+</style>
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'staff_home' %}" class="brand-link">
+    <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+    <span class="brand-text font-weight-bold text-white">ABC university</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="{% url 'staff_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-item">
+          {% url 'staff_home' as staff_home %}
+          <a href="{{ staff_home }}" class="nav-link {% if request.path == staff_home %} active {% endif %}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Home</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'staff_take_attendance' as staff_take_attendance %}
+          <a href="{{ staff_take_attendance }}" class="nav-link {% if request.path == staff_take_attendance %} active {% endif %}">
+            <i class="nav-icon fas fa-calendar-plus"></i>
+            <p>Take Attendance</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'staff_update_attendance' as staff_update_attendance %}
+          <a href="{{ staff_update_attendance }}" class="nav-link {% if request.path == staff_update_attendance %} active {% endif %}">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>View Update Attendance</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'staff_add_result' as staff_add_result %}
+          <a href="{{ staff_add_result }}" class="nav-link {% if request.path == staff_add_result %} active {% endif %}">
+            <i class="nav-icon fas fa-tasks"></i>
+            <p>Add Result</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'staff_apply_leave' as staff_apply_leave %}
+          <a href="{{ staff_apply_leave }}" class="nav-link {% if request.path == staff_apply_leave %} active {% endif %}">
+            <i class="nav-icon fas fa-envelope-open-text"></i>
+            <p>Apply Leave</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'staff_feedback' as staff_feedback %}
+          <a href="{{ staff_feedback }}" class="nav-link {% if request.path == staff_feedback %} active {% endif %}">
+            <i class="nav-icon fas fa-comments"></i>
+            <p>Feedback</p>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
